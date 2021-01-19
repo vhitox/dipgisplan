@@ -1,3 +1,7 @@
 target/
 *.war
 !important war
+test/
+.idea/vcs.xml
+.idea/workspace.xml
+dipgisplan.iml

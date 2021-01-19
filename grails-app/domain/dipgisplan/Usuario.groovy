@@ -22,7 +22,7 @@ class Usuario {
 	}
 
 	static belongsTo = [area: Area]
-	static hasMany = [actividades: Actividad]
+	static hasMany = [actividades: Actividad, marcados: Marcado]
 
 	static mapping = {
 		password column: '`password`'

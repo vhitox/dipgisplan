@@ -84,8 +84,39 @@
 	</style>
 </head>
 
-<body style="margin: 0px auto !important;">
-<div id='login'>
+<body>
+<div class="col-lg-5">
+	<div class="card shadow-lg border-0 rounded-lg mt-5">
+		<div class="card-header text-center"><img src="${createLinkTo(dir: 'images', file: 'logodipgis.png')}" style="width: 60px;"/><h3 class="text-center font-weight-light my-4">Login DIPGIS Control</h3></div>
+		<div class="card-body">
+			<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+				<div class="form-group">
+					<label for='username' class="form-label"><g:message code="springSecurity.login.username.label"/>:</label>
+					<input type='text' class='text_ form-control' name='j_username' id='username'/>
+				</div>
+				<div class="form-group">
+					<label for='password' class="form-label"><g:message code="springSecurity.login.password.label"/>:</label>
+					<input type='password' class='text_ form-control' name='j_password' id='password'/>
+				</div>
+				<div class="form-group">
+					<div class="custom-control custom-checkbox">
+						<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
+						<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
+					</div>
+				</div>
+				<div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+					<a class="small" href="password.html">Forgot Password?</a>
+					<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
+				</div>
+			</form>
+		</div>
+		<div class="card-footer text-center">
+			%{--<div class="small"><a href="register.html">Need an account? Sign up!</a></div>--}%
+		</div>
+	</div>
+</div>
+
+%{--<div id='login'>
 	<div class='container-xl'>
 		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
 
@@ -116,7 +147,7 @@
 		</div>
 
 	</div>
-</div>
+</div>--}%
 <script type='text/javascript'>
 	<!--
 	(function() {

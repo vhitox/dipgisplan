@@ -25,7 +25,7 @@ environments {
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = "dipgis"
-            url = "jdbc:mysql://localhost/dipgisplan"
+            url = "jdbc:mysql://localhost/dipgisplantest"
         }
     }
     production {

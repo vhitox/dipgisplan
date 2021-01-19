@@ -1,11 +1,13 @@
 package dipgisplan
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
 
+@Secured(['ROLE_ADMIN'])
 class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+    def springSecurityService
     def index() {
         redirect(action: "list", params: params)
     }
@@ -21,11 +23,12 @@ class UsuarioController {
 
     def save() {
         def usuarioInstance = new Usuario(params)
+        def rol = Rol.get(params.rol)
         if (!usuarioInstance.save(flush: true)) {
             render(view: "create", model: [usuarioInstance: usuarioInstance])
             return
         }
-
+        def rolUser = new UsuarioRol(usuario: usuarioInstance, rol: rol).save()
 		flash.message = message(code: 'default.created.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
         redirect(action: "show", id: usuarioInstance.id)
     }
@@ -101,7 +104,14 @@ class UsuarioController {
         }
     }
 
+    @Secured(['ROLE_FUNCIONARIO','ROLE_ADMIN','ROLE_JEFE'])
     def home(){
 
+    }
+
+    @Secured(['ROLE_FUNCIONARIO','ROLE_ADMIN','ROLE_JEFE'])
+    def hastamanana(){
+        def user = springSecurityService.currentUser
+        [usuario: user]
     }
 }
