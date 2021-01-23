@@ -106,7 +106,6 @@ class UsuarioController {
 
     @Secured(['ROLE_FUNCIONARIO','ROLE_ADMIN','ROLE_JEFE'])
     def home(){
-
     }
 
     @Secured(['ROLE_FUNCIONARIO','ROLE_ADMIN','ROLE_JEFE'])
