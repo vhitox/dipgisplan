@@ -55,11 +55,17 @@
                     </g:else>
 
                     </g:if><g:else>
-                    <g:link class="btn btn-success" controller="marcado" action="marcarEntrada">Marcar Inicio</g:link>
+					<g:form controller="marcado" action="marcarEntrada" style="display: inline-block;" useToken="true" name="uno">
+						<g:hiddenField name="user" value="${usuario.username}"/>
+						<g:submitButton class="btn btn-success" name="enviar" value="Marcar Inicio"/>
+					</g:form>
                 </g:else>
                 </g:if>
                 <g:else>
-                    <g:link class="btn btn-success" controller="marcado" action="marcarEntrada">Marcar Inicio</g:link>
+					<g:form controller="marcado" action="marcarEntrada" style="display: inline-block;" useToken="true" name="dos">
+						<g:hiddenField name="user" value="${usuario.username}"/>
+						<g:submitButton class="btn btn-success" name="enviar" value="Marcar Inicio"/>
+					</g:form>
                 </g:else>
 
 			</div>
@@ -129,6 +135,11 @@
 									</nav>
 								</div>
 							</g:each>
+                            <div class="sb-sidenav-menu-heading">Reportes</div>
+                            <g:link class="nav-link" controller="marcado" action="historialMarcado">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Marcados
+                            </g:link>
 						</sec:ifAnyGranted>
 						<sec:ifAnyGranted roles="ROLE_FUNCIONARIO">
 							%{--<g:set var="usernameis" value="${sec.username()}"/>

@@ -1,7 +1,9 @@
 package dipgisplan
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
 
+@Secured(['ROLE_ADMIN'])
 class MarcadoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -101,21 +103,36 @@ class MarcadoController {
         }
     }
 
+    @Secured(['ROLE_FUNCIONARIO'])
     def marcarEntrada(){
         def user = springSecurityService.currentUser
-        def marcado = new Marcado(entrada: new Date(), usuario: user)
-        if(marcado.save()){
-            println("MARCADO EXITOSO!")
-        }else{
-            println("MARCADO FALLIDO!")
+        withForm {
+            def marcado = new Marcado(entrada: new Date(), usuario: user)
+            if(marcado.save()){
+                println("MARCADO EXITOSO!")
+            }else{
+                println("MARCADO FALLIDO!")
+            }
+            redirect(controller: 'usuario', action: 'home')
+        }.invalidToken{
+            render "Cargando ..."
+            redirect(controller: 'usuario', action: 'home')
         }
-        redirect(controller: 'usuario', action: 'home')
     }
 
+    @Secured(['ROLE_FUNCIONARIO'])
     def marcarSalida(){
         def marcado = Marcado.get(params.id)
         marcado.salida = new Date()
         marcado.save()
         redirect(controller: 'usuario', action: 'hastamanana')
+    }
+
+    @Secured(['ROLE_ADMIN','ROLE_JEFE'])
+    def historialMarcado(){
+        def user = springSecurityService.currentUser
+        def marcados = Marcado.findAll().reverse()
+        def filterDay = marcados.groupBy {it.entrada.format("dd/MM/yyyy")}
+        [marcadosList:filterDay]
     }
 }
